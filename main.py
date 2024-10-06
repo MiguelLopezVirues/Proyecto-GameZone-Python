@@ -1,7 +1,7 @@
 from src.ahorcado import Ahorcado
 from src.tres_raya import Tres_raya
 from src.preguntados import Preguntados
-from src.piedra_papel_tijera import Rock_paper_scissors
+from src.piedra_papel_tijera import Piedra_papel_tijera
 import time
 import pyfiglet
 from colorama import Fore, Style, init
@@ -50,7 +50,7 @@ def elegir_juego():
         "1": Ahorcado(),
         "2": Tres_raya(),
         "3": Preguntados(),
-        "4": Rock_paper_scissors(),
+        "4": Piedra_papel_tijera(),
         "5": "salir"
     }
     try:

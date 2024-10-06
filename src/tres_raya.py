@@ -2,7 +2,7 @@
 import random 
 from functools import reduce
 from operator import itemgetter
-from .ressources.tic_tac_toe_recursos import welcome_banner, fichas_tic_tac_toe
+from .recursos.tres_en_raya_recursos import welcome_banner, fichas_tic_tac_toe
 import os 
 import pyfiglet
 from colorama import Fore, Style, init

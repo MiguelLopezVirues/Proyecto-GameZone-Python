@@ -1,6 +1,6 @@
 import random
 import sys
-from .ressources.ahorcado_recursos import HANGMANPICS, HANGMANPIC_SUCCESS, HANGMANPIC_DEATH, palabras_ahorcado, welcome_banner
+from .recursos.ahorcado_recursos import HANGMANPICS, HANGMANPIC_SUCCESS, HANGMANPIC_DEATH, palabras_ahorcado
 import pyfiglet
 from colorama import Fore, Style, init
 import os
@@ -89,9 +89,9 @@ class Ahorcado():
 
     def introducir_letra(self) -> bool:
         """"""
-        letra_intento = input("\n\nEscribe una letra:")
+        self.letra_ultimo_intento = input("\n\nEscribe una letra:")
         try:
-            if not letra_intento.isalpha():
+            if not self.letra_ultimo_intento.isalpha():
                 raise ValueError("El valor introducido no es una letra.")
         except:
             print("No has introducido una letra válida. Inténtalo de nuevo.")
@@ -105,11 +105,10 @@ class Ahorcado():
             resultado = "error"
             
             
-
-    def actualizar_display(self,letra_intento):
-        while letra_intento in self.palabra_turno_lista:
-            posicion_letra = self.palabra_turno_lista.index(letra_intento)
-            self.display_palabra_lista[posicion_letra] = letra_intento.upper()
+    def actualizar_display(self):
+        while self.letra_ultimo_intento in self.palabra_turno_lista:
+            posicion_letra = self.palabra_turno_lista.index(self.letra_ultimo_intento)
+            self.display_palabra_lista[posicion_letra] = self.letra_ultimo_intento.upper()
             self.palabra_turno_lista[posicion_letra] = "_"
 
     

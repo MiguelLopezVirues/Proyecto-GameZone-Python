@@ -1,33 +1,32 @@
 import random
 import sys
-from .ressources.rock_paper_scissors_ressources import figures_ascii_art, welcome_banner
+from .recursos.piedra_papel_tijera_recursos import figures_ascii_art, welcome_banner
 import pyfiglet
 from colorama import Fore, Style, init
 import os
-class Rock_paper_scissors():
+class Piedra_papel_tijera():
     def __init__(self) -> None:
         self.interacciones_lucha_texto = {
-            "rock": {
-                "scissors": "rock crushes scissors!",
-                "lizard": "rock crushes lizard!"
-            },
-            "paper": {
-                "rock": "paper covers rock!",
-                "spock": "paper disproves Spock!"
-            },
-            "scissors": {
-                "paper": "scissors cuts paper!",
-                "lizard": "scissors decapitates lizard!"
-            },
-            "lizard": {
-                "spock": "lizard poisons Spock!",
-                "paper": "lizard eats paper!"
-            },
-            "spock": {
-                "scissors": "Spock smashes scissors!",
-                "rock": "Spock vaporizes rock!"
-            }
-        }
+                "piedra": {
+                    "tijeras": "¡piedra aplasta tijeras!",
+                    "lagarto": "¡piedra aplasta lagarto!"
+                },
+                "papel": {
+                    "piedra": "¡papel cubre piedra!",
+                    "spock": "¡papel refuta a Spock!"
+                },
+                "tijeras": {
+                    "papel": "¡tijeras corta papel!",
+                    "lagarto": "¡tijeras decapita lagarto!"
+                },
+                "lagarto": {
+                    "spock": "¡lagarto envenena a Spock!",
+                    "papel": "¡lagarto come papel!"
+                },
+                "spock": {
+                    "tijeras": "¡Spock rompe tijeras!",
+                    "piedra": "¡Spock vaporiza piedra!"
+                }}
 
 
         self.rondas = 3
@@ -36,7 +35,7 @@ class Rock_paper_scissors():
     
     def welcome(self):
         init(autoreset=True)
-        titulo = pyfiglet.figlet_format("ROCK-PAPER-SCISSORS", font="rounded")
+        titulo = pyfiglet.figlet_format("PIEDRA-PAPEL-TIJERA", font="rounded")
         print(Fore.BLUE + titulo)
 
     def jugar(self):

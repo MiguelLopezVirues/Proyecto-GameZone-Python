@@ -1,6 +1,6 @@
 import random
 import sys
-from .ressources.preguntados_recursos import actualidad, ciencia, historia, cultura_general, entretenimiento, welcome_banner
+from .recursos.preguntados_recursos import actualidad, ciencia, historia, cultura_general, entretenimiento, welcome_banner
 import pyfiglet
 from colorama import Fore, Style, init
 import os

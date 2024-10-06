@@ -4,19 +4,19 @@
 Este proyecto realiza el desarrollo de una Sala de Juegos con 4 juegos clásicos, cuyas lógicas de juego individuales están gestionadas por sus clases de Python independientes. Cada uno de los juegos se orquesta desde un script central que hace la función de Sala de Juegos, donde el usuario tiene la opción de jugar al juego que elija.
 
 ## 🗂️ Estructura del Proyecto
-├── src/                             # Directorio de archivos con las clases que gestionan las lógicas de cada juego
+├── src/  # Directorio de scripts con las lógicas de cada juego
 │   ├── ahorcado.py
 │   ├── piedra_papel_tijera.py
 │   ├── preguntados.py
 │   ├── tres_raya.py            
-│   └── recursos/                    # Directorio de archivos utilizados para almacenar variables de estilo de cada uno de los juegos 
+│   └── recursos/   # Archivos almacenadores de variables estáticas de cada uno de los juegos 
 │       ├── ahorcado_recursos.py     
 │       ├── piedra_papel_tijera.py   
 │       ├── preguntados.py          
 │       └── tres_raya_recursos.py    
-├── main.py                          # Script central de Sala de Juego
-├── requirements.txt                 # Paquetes requeridos para la ejecución y reproducción del proyecto
-├── README.md                        # Descripción del proyecto
+├── main.py    # Script central de Sala de Juego
+├── requirements.txt  # Paquetes requeridos para la ejecución y reproducción del proyecto
+├── README.md  # Descripción del proyecto
 
 ## 🛠️ Instalación y Requisitos
 Este proyecto require Python 3.9 y requiere de forma adicional únicamente de la librería pyfiglet, para el estilo de los banners utilizados en las presentaciones de los juegos. El archivo requirements.txt puede utilizarse para instalarlas con el comando:

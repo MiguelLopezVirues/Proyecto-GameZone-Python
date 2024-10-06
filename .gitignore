@@ -1,7 +1,12 @@
 # development notebook
+/notebooks/
 notebooks/notebook_desarrollo.ipynb
 # Pipfiles
-Pipfile*
+Pipfile
+Pipfile.lock
+
+# plantillas 
+modulo1-como-escribir-readme.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

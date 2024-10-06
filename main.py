@@ -1,4 +1,5 @@
 from src.ahorcado import Ahorcado
+from src.tres_raya import Tres_raya
 
 def mostrar_menu():
     print("Bienvenido a la GameZone")
@@ -12,7 +13,8 @@ def main():
     mostrar_menu()
 
     juegos = {
-        "1": Ahorcado()
+        "1": Ahorcado(),
+        "2": Tres_raya()
     }
 
     juego_seleccionado = input("¿A qué juego quieres jugar? Introduce el número que le corresponde:")

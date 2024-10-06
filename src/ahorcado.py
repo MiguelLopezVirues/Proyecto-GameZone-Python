@@ -20,14 +20,17 @@ class Ahorcado():
         while "_" in self.display_palabra_lista and self.vidas_restantes > 0:
             letra_intento = input("\n\nEscribe una letra:")
             self.comprobar_letra(letra_intento)
-
             if "_" not in self.display_palabra_lista:
-                self.actualizar_dibujo(self.vidas_restantes,"win")
+                self.actualizar_dibujo("win")
                 print("\n¡Enhorabuena, has ganado!")
-            else:
-                self.actualizar_dibujo(self.vidas_restantes,"loss")
+            elif self.vidas_restantes == 0:
+                self.actualizar_dibujo("loss")
                 print("\n¡NOOOO, has matado al ahorcado!")
+            else:
+                print("Actualiza dibujo")
+                self.actualizar_dibujo(self.vidas_restantes)
 
+            self.actualizar_display(letra_intento)
             self.pintar_dibujo()
             self.pintar_display()
 
@@ -36,14 +39,19 @@ class Ahorcado():
     
     def seleccionar_dificultad(self):
         self.vidas_restantes = int(input("""Elige tu dificultad introduciendo el número de vidas:
-              Nenaza: 6 vidas
-              Principiante: 5 vidas
-              Corriente: 4 vidas
-              Atrevido: 3 vidas
-              Leyenda: 2 vidas
-              Puto colgao: 1 vida
-              """))
-        self.dibujo = HANGMANPICS[-self.vidas_restantes]
+        Nenaza: 6 vidas
+        Principiante: 5 vidas
+        Corriente: 4 vidas
+        Atrevido: 3 vidas
+        Leyenda: 2 vidas
+        Puto colgao: 1 vida
+        """))
+        self.dibujo = HANGMANPICS[-self.vidas_restantes-1]
+
+
+    def pintar_dibujo(self):
+        """"""
+        print(self.dibujo)
 
     def pintar_display(self):
         """"""
@@ -52,9 +60,7 @@ class Ahorcado():
         print(f"Te quedan {self.vidas_restantes} vidas restantes.")
 
 
-    def pintar_dibujo(self):
-        """"""
-        print(self.dibujo)
+
 
 
     def generar_palabra(self) -> None:
@@ -68,14 +74,13 @@ class Ahorcado():
         """"""
         if letra_intento in self.palabra_turno_lista:
             print("¡Acierto!")
-            self.actualizar_display(letra_intento)
                 
         else: 
+            print("¡Error!")
             self.vidas_restantes -= 1
             resultado = "error"
-            self.actualizar_dibujo(self.vidas_restantes,resultado)
             
-            print("¡Error!")
+            
 
     def actualizar_display(self,letra_intento):
         while letra_intento in self.palabra_turno_lista:
@@ -84,20 +89,19 @@ class Ahorcado():
             self.palabra_turno_lista[posicion_letra] = "_"
 
     
-    def actualizar_dibujo(self,vidas_restantes,resultado="error") -> None:
+    def actualizar_dibujo(self,resultado="error") -> None:
         """"""
         if resultado == "win":
             self.dibujo = HANGMANPIC_SUCCESS
         elif resultado == "loss":
             self.dibujo = HANGMANPIC_DEATH
         else:
-            self.dibujo = HANGMANPICS[-vidas_restantes-1]
+            self.dibujo = HANGMANPICS[-self.vidas_restantes-1]
 
     def reset(self):
         seguir_jugando = input("¿Deseas volver a jugar? [Y/N]")
         if seguir_jugando.upper()[0] == "Y":
-            self.intentos = list()
-            self.display_palabra_lista = list()
+            self.__init__()
             self.jugar()
         else:
             print("¡Ha sido un placer!")

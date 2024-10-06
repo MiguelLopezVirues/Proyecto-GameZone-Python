@@ -1,3 +1,6 @@
+# development notebook
+notebooks/notebook_desarrollo.ipynb
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

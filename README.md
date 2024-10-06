@@ -9,15 +9,18 @@ Este proyecto realiza el desarrollo de una Sala de Juegos con 4 juegos clásicos
 │   ├── ahorcado.py
 
 │   ├── piedra_papel_tijera.py
+
 │   ├── preguntados.py
 
 │   ├── tres_raya.py            
 │   └── recursos/   # Archivos almacenadores de variables estáticas de cada uno de los juegos 
+
 │       ├── ahorcado_recursos.py     
 │       ├── piedra_papel_tijera.py   
 │       ├── preguntados.py          
 │       └── tres_raya_recursos.py    
 ├── main.py    # Script central de Sala de Juego
+
 ├── requirements.txt  # Paquetes requeridos para la ejecución y reproducción del proyecto
 
 ├── README.md  # Descripción del proyecto

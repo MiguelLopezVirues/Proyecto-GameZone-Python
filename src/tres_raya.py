@@ -2,16 +2,18 @@
 import random 
 from functools import reduce
 from operator import itemgetter
-
+from .ressources.tic_tac_toe_recursos import welcome_banner, fichas_tic_tac_toe
+import os 
 class Tres_raya():
     def __init__(self) -> None:
-        self.posiciones = [[" " for i in range(3)] for j in range(3)]
+        self.celda_vacia = "  "
+        self.posiciones = [[self.celda_vacia for i in range(3)] for j in range(3)]
         self.lista_coordenadas = [f"{fila},{columna}" for columna in range(3) for fila in range(3)]
         self.matriz_coordenadas = [[f"{fila},{columna}" for columna in range(3)] for fila in range(3)]
         self.n_jugadores = 1
         self.ficha_jugador = {
-            "jugador_1": "X",
-            "jugador_2": "O"
+            "jugador_1": fichas_tic_tac_toe["x"],
+            "jugador_2": fichas_tic_tac_toe["o"]
         }
         self.turno = "jugador_1"
         self.lista_jugadores = ["jugador_1","jugador_2"]
@@ -36,6 +38,8 @@ class Tres_raya():
             "diagonal_0,0": [fila[posicion] for posicion,fila in enumerate(self.matriz_coordenadas)],
             "diagonal_2,0": [fila[posicion] for posicion,fila in enumerate(reversed(self.matriz_coordenadas))]
         }
+    def welcome(self):
+        print(welcome_banner)
 
     def jugar(self):
         self.pintar_tablero()
@@ -45,12 +49,13 @@ class Tres_raya():
         self.elegir_turnos()
         self.elegir_ficha()
         self.pintar_tablero()
-        while not all(posicion != " " for fila in self.posiciones for posicion in fila):
+        while not all(posicion != self.celda_vacia for fila in self.posiciones for posicion in fila):
             if self.modo_automatico == True and self.turno == "jugador_2":
                 print("Turno del Jugador 2.")
                 coordenada = self.estrategia_maquina(self.modo_dificultad)
             else:
                 coordenada = input(f"{self.turno.title()}, introduce una coordenada de dos numeros, separados por una coma: \n")
+            self.limpiar_pantalla():
             self.introducir_ficha(coordenada)
             self.pintar_tablero()
             if self.comprobar_victoria() == True:
@@ -89,14 +94,15 @@ class Tres_raya():
         pass
     
     def elegir_ficha(self):
-        eleccion_fichas = int(input("""\nJugador 1. ¿Con que ficha quieres jugar? Introduce el número correspondiente a tu elección:
-                                1. X
-                                2. O
+        eleccion_fichas = int(input(f"""\nJugador 1. ¿Con que ficha quieres jugar? Introduce el número correspondiente a tu elección:
+                                1. {fichas_tic_tac_toe["x"]}
+                                2. {fichas_tic_tac_toe["o"]}
                                 3. Aleatorio
                                 \n"""))
         
-        fichas_posibles = ["X","0"]
-        
+        fichas_posibles = [fichas_tic_tac_toe["x"],fichas_tic_tac_toe["o"]]
+
+
         opciones_fichas = {
             1: 0,
             2: 1,
@@ -119,7 +125,7 @@ class Tres_raya():
     def encontrar_coordenadas_celdas_vacias(self,coordenada):
         fila = int(coordenada.split(",")[0])
         columna = int(coordenada.split(",")[1])
-        if self.posiciones[fila][columna] == " ":
+        if self.posiciones[fila][columna] == self.celda_vacia:
             return True
         
     def evaluar_celdas_vacias(self,lista_puntuaciones,coordenada):
@@ -138,11 +144,11 @@ class Tres_raya():
                 acumulado[1][0] = str(int(acumulado[1][0]) + 1)
             elif linea.count(self.ficha_jugador["jugador_1"]) == 2: # Enemigo a punto de ganar partida
                 acumulado[1][1] = str(int(acumulado[1][1]) + 1)
-            elif linea.count(self.ficha_jugador["jugador_2"]) == 1 and linea.count(" ") == 2: # Acumular estrategia
+            elif linea.count(self.ficha_jugador["jugador_2"]) == 1 and linea.count(self.celda_vacia) == 2: # Acumular estrategia
                 acumulado[1][2] = str(int(acumulado[1][2]) + 1)
-            elif linea.count(self.ficha_jugador["jugador_1"]) == 1 and linea.count(" ") == 2: # Bloquear estrategia
+            elif linea.count(self.ficha_jugador["jugador_1"]) == 1 and linea.count(self.celda_vacia) == 2: # Bloquear estrategia
                 acumulado[1][3] = str(int(acumulado[1][3]) + 1)
-            elif linea.count(" ") == 3: # Linea vacía
+            elif linea.count(self.celda_vacia) == 3: # Linea vacía
                 acumulado[1][4] = str(int(acumulado[1][4]) + 1)
             acumulado[1] = ("").join(acumulado[1])
             return acumulado
@@ -173,16 +179,20 @@ class Tres_raya():
         fila, columna = coordenada.split(",")
         fila = int(coordenada.split(",")[0])
         columna = int(coordenada.split(",")[1])
-        if self.posiciones[fila][columna] == " ":
+        if self.posiciones[fila][columna] == self.celda_vacia:
             self.posiciones[fila][columna] = self.ficha_jugador[self.turno]
         else:
             coordenada = input("La coordenada introducida ya está ocupada. Por favor introduce otra distinta: ")
             self.introducir_ficha(coordenada)
     
     def pintar_tablero(self):
-        print("\n ---")
-        [print(f"({fila[0]}) ({fila[1]}) ({fila[2]})") for fila in self.posiciones]
-        print("\n ---")
+        print("\n")
+        print(f"{self.posiciones[0][0]}❕{self.posiciones[0][1]}❕{self.posiciones[0][2]}")
+        print("➖➕➖➕➖")
+        print(f"{self.posiciones[1][0]}❕{self.posiciones[1][1]}❕{self.posiciones[1][2]}")
+        print("➖➕➖➕➖")
+        print(f"{self.posiciones[2][0]}❕{self.posiciones[2][1]}❕{self.posiciones[2][2]}")
+        print("\n")
 
     def actualizar_lineas(self):
         self.lineas = {
@@ -207,10 +217,14 @@ class Tres_raya():
                     ganador = self.lista_jugadores[0].title().replace("_"," ")
                     print(f"\n¡Enhorabuena {ganador}, ganas la partida!")
                 return True
-            elif all([columna != " " for fila in self.posiciones for columna in fila]):
+            elif all([columna != self.celda_vacia for fila in self.posiciones for columna in fila]):
                 print("Ha habido un empate.")
                 return True
         return False
+    
+    def limpiar_pantalla(self):
+    # Limpiar la terminal (funciona en Windows, Mac y Linux)
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 
     def reset(self):

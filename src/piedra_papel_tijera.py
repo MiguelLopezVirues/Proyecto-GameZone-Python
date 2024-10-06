@@ -1,7 +1,8 @@
 import random
-from .ressources.rock_paper_scissors_ressources import ascii_art
+import sys
+from .ressources.rock_paper_scissors_ressources import figures_ascii_art, welcome_banner
 
-class rock_paper_scissors():
+class Rock_paper_scissors():
     def __init__(self) -> None:
         self.interacciones_lucha = {
             "rock": ["scissors", "lizard"],
@@ -37,6 +38,9 @@ class rock_paper_scissors():
         self.rondas = 3
         self.puntuacion_jugador = 0
         self.puntuacion_maquina = 0
+    
+    def welcome(self):
+        print(welcome_banner)
 
     def jugar(self):
         self.definir_rondas()
@@ -66,6 +70,7 @@ class rock_paper_scissors():
         self.luchador_maquina = random.choice(list(self.interacciones_lucha.keys()))
 
         print(f"\nHas elegido: {self.luchador_jugador.title()}. La máquina ha elegido: {self.luchador_maquina}.")
+        print(f"{figures_ascii_art[self.luchador_jugador]}\n\n     VS.    \n\n{figures_ascii_art[self.luchador_maquina]}")
 
     def comprobar_ganador_ronda(self):
         if self.luchador_jugador == self.luchador_maquina:

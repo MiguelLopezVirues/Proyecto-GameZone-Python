@@ -1,3 +1,11 @@
+welcome_banner="""
+ ____  ____  ____  ___  _  _  __ _  ____  __   ____   __   ____ 
+(  _ \(  _ \(  __)/ __)/ )( \(  ( \(_  _)/ _\ (    \ /  \ / ___)
+ ) __/ )   / ) _)( (_ \) \/ (/    /  )( /    \ ) D ((  O )\___ \
+(__)  (__\_)(____)\___/\____/\_)__) (__)\_/\_/(____/ \__/ (____/
+
+"""
+
 cultura_general = [
     {"pregunta": "¿Cuál es la capital de Japón?", "correcta": "Tokio", "incorrecta": ["Osaka", "Kioto", "Nagoya"]},
     {"pregunta": "¿En qué continente se encuentra Egipto?", "correcta": "África", "incorrecta": ["Asia", "Europa", "Oceanía"]},

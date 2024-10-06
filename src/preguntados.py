@@ -1,11 +1,14 @@
 import random
 import sys
-from .ressources.preguntados_recursos import actualidad, ciencia, historia, cultura_general, entretenimiento
+from .ressources.preguntados_recursos import actualidad, ciencia, historia, cultura_general, entretenimiento, welcome_banner
 
 class Preguntados():
     def __init__(self) -> None:
         self.rondas = [n for n in range(0,10)]
         self.puntuacion = 0
+
+    def welcome(self):
+        print(welcome_banner)
 
     def jugar(self):
         self.crear_set_preguntas()

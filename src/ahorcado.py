@@ -1,6 +1,6 @@
 import random
 import sys
-from .ressources.ahorcado_recursos import HANGMANPICS, HANGMANPIC_SUCCESS, HANGMANPIC_DEATH, palabras_ahorcado
+from .ressources.ahorcado_recursos import HANGMANPICS, HANGMANPIC_SUCCESS, HANGMANPIC_DEATH, palabras_ahorcado, welcome_banner
 
 ### Apuntes
 # Valorar si hay forma mejor deshacerme del uso de la copia lista por su método remove
@@ -11,6 +11,9 @@ class Ahorcado():
         self.intentos = list()
         self.display_palabra_lista = list()
         self.dibujo = ""
+
+    def welcome(self):
+        print(welcome_banner)
 
     def jugar(self):
         self.seleccionar_dificultad()

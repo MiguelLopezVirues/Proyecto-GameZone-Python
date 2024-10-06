@@ -1,6 +1,9 @@
 import random
 import sys
 from .ressources.preguntados_recursos import actualidad, ciencia, historia, cultura_general, entretenimiento, welcome_banner
+import pyfiglet
+from colorama import Fore, Style, init
+import os
 
 class Preguntados():
     def __init__(self) -> None:
@@ -8,7 +11,9 @@ class Preguntados():
         self.puntuacion = 0
 
     def welcome(self):
-        print(welcome_banner)
+        init(autoreset=True)
+        titulo = pyfiglet.figlet_format("PREGUNTADOS", font="starwars")
+        print(Fore.RED + titulo)
 
     def jugar(self):
         self.crear_set_preguntas()
@@ -32,17 +37,24 @@ class Preguntados():
             }
             for letra, respuesta in respuestas_dict.items():
                 print(f"{letra}) {respuesta}")
+            
+            if self.responder_pregunta(p_partida,respuestas_dict) == False:
+                break
 
-            respuesta_usuario = input("Introduce la letra que corresponde con tu respuesta:\n").upper()
+    def responder_pregunta(self, p_partida, respuestas_dict):
+        respuesta_usuario = input("Introduce la letra que corresponde con tu respuesta:\n").upper()
+        try:
             if self.verificar_respuesta(p_partida,respuestas_dict[respuesta_usuario]) == True:
                 print("\n¡Correcto!")
                 print("Puntuacion", self.puntuacion)
                 self.puntuacion += 1
-                continue
+                return True
             else:
                 print("\nOoooh ¡Has perdido!")
-                break
-        
+                return False
+        except:
+            print("\nLa respuesta que has introducido no es válida.")
+            
     
     def verificar_respuesta(self, pregunta, respuesta):
         if respuesta == pregunta["correcta"]:
@@ -59,6 +71,9 @@ class Preguntados():
         
         random.shuffle(self.p_partida)
         return 
+    
+    def limpiar_pantalla(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
     
     def reset(self):
         seguir_jugando = input("\n¿Deseas volver a jugar? [Y/N]\n")

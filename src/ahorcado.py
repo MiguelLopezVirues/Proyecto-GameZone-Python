@@ -1,6 +1,9 @@
 import random
 import sys
 from .ressources.ahorcado_recursos import HANGMANPICS, HANGMANPIC_SUCCESS, HANGMANPIC_DEATH, palabras_ahorcado, welcome_banner
+import pyfiglet
+from colorama import Fore, Style, init
+import os
 
 ### Apuntes
 # Valorar si hay forma mejor deshacerme del uso de la copia lista por su método remove
@@ -13,7 +16,9 @@ class Ahorcado():
         self.dibujo = ""
 
     def welcome(self):
-        print(welcome_banner)
+        init(autoreset=True)
+        self.titulo = pyfiglet.figlet_format("HANGMAN", font="poison")
+        print(Fore.LIGHTRED_EX + self.titulo)
 
     def jugar(self):
         self.seleccionar_dificultad()
@@ -21,14 +26,15 @@ class Ahorcado():
         self.pintar_dibujo()
         self.pintar_display()
         while "_" in self.display_palabra_lista and self.vidas_restantes > 0:
-            letra_intento = input("\n\nEscribe una letra:")
-            self.comprobar_letra(letra_intento)
+            self.introducir_letra()
             if "_" not in self.display_palabra_lista:
                 self.actualizar_dibujo("win")
                 print("\n¡Enhorabuena, has ganado!")
             elif self.vidas_restantes == 0:
                 self.actualizar_dibujo("loss")
                 print("\n¡NOOOO, has matado al ahorcado!")
+                self.pintar_dibujo()
+                break
             else:
                 print("Actualiza dibujo")
                 self.actualizar_dibujo(self.vidas_restantes)
@@ -41,14 +47,22 @@ class Ahorcado():
 
     
     def seleccionar_dificultad(self):
-        self.vidas_restantes = int(input("""Elige tu dificultad introduciendo el número de vidas:
-        Patético: 6 vidas
-        Principiante: 5 vidas
-        Corriente: 4 vidas
-        Atrevido: 3 vidas
-        Leyenda: 2 vidas
-        Puto colgao: 1 vida
-        """))
+        try:
+            self.vidas_restantes = int(input("""Elige tu dificultad introduciendo el número de vidas:                                
+            Insecto: 6 vidas
+            Principiante: 5 vidas
+            Corriente: 4 vidas
+            Atrevido: 3 vidas
+            Leyenda: 2 vidas
+            Puto colgao: 1 vida
+            """))
+            if self.vidas_restantes < 1 or self.vidas_restantes > 6:
+                raise IndexError("Valor fuera de rango.")
+        except IndexError:
+            print("El valor que has introducido está fuera del rango permitido. Inténtalo de nuevo.")
+        except:
+            print("El valor que has introducido no es correcto. Inténtalo de nuevo.")
+
         self.dibujo = HANGMANPICS[-self.vidas_restantes-1]
 
 
@@ -73,8 +87,15 @@ class Ahorcado():
 
 
 
-    def comprobar_letra(self, letra_intento) -> bool:
+    def introducir_letra(self) -> bool:
         """"""
+        letra_intento = input("\n\nEscribe una letra:")
+        try:
+            if not letra_intento.isalpha():
+                raise ValueError("El valor introducido no es una letra.")
+        except:
+            print("No has introducido una letra válida. Inténtalo de nuevo.")
+            self.introducir_letra()
         if letra_intento in self.palabra_turno_lista:
             print("¡Acierto!")
                 
@@ -100,6 +121,9 @@ class Ahorcado():
             self.dibujo = HANGMANPIC_DEATH
         else:
             self.dibujo = HANGMANPICS[-self.vidas_restantes-1]
+
+    def limpiar_pantalla(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     def reset(self):
         seguir_jugando = input("\n¿Deseas volver a jugar? [Y/N]\n")

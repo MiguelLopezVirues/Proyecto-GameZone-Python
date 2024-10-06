@@ -1,16 +1,11 @@
 import random
 import sys
 from .ressources.rock_paper_scissors_ressources import figures_ascii_art, welcome_banner
-
+import pyfiglet
+from colorama import Fore, Style, init
+import os
 class Rock_paper_scissors():
     def __init__(self) -> None:
-        self.interacciones_lucha = {
-            "rock": ["scissors", "lizard"],
-            "paper": ["rock", "spock"],
-            "scissors": ["paper","lizard"],
-            "lizard": ["spock","paper"],
-            "spock": ["scissors","rock"]
-        }
         self.interacciones_lucha_texto = {
             "rock": {
                 "scissors": "rock crushes scissors!",
@@ -40,7 +35,9 @@ class Rock_paper_scissors():
         self.puntuacion_maquina = 0
     
     def welcome(self):
-        print(welcome_banner)
+        init(autoreset=True)
+        titulo = pyfiglet.figlet_format("ROCK-PAPER-SCISSORS", font="rounded")
+        print(Fore.BLUE + titulo)
 
     def jugar(self):
         self.definir_rondas()
@@ -62,12 +59,20 @@ class Rock_paper_scissors():
 
 
     def definir_rondas(self):
-        self.rondas = int(input("\n¿Al mejor de cuántas rondas quieres jugar?"))
+        try:
+            self.rondas = int(input("\n¿Al mejor de cuántas rondas quieres jugar?"))
+        except ValueError:
+            print("\nDebes introducir un número válido. Inténtalo de nuevo.")
+            self.definir_rondas()
 
     def elegir_luchador(self):
         self.luchador_jugador = input("\nElige a tu luchador introduciendo su nombre:\n- rock\n- paper \n- scissors\n- lizard\n- Spock\n").lower()
-
-        self.luchador_maquina = random.choice(list(self.interacciones_lucha.keys()))
+        try:
+            self.interacciones_lucha_texto[self.luchador_jugador]
+        except:
+            print("\nHas introducido un valor incorrecto para el luchador. Inténtalo de nuevo.")
+            self.elegir_luchador()
+        self.luchador_maquina = random.choice(list(self.interacciones_lucha_texto.keys()))
 
         print(f"\nHas elegido: {self.luchador_jugador.title()}. La máquina ha elegido: {self.luchador_maquina}.")
         print(f"{figures_ascii_art[self.luchador_jugador]}\n\n     VS.    \n\n{figures_ascii_art[self.luchador_maquina]}")
@@ -81,7 +86,9 @@ class Rock_paper_scissors():
         else:
             print(f"\n{self.interacciones_lucha_texto[self.luchador_maquina][self.luchador_jugador]}. Pierdes esta ronda, te falta entrenamiento... ")
             self.puntuacion_maquina +=1
- 
+
+    def limpiar_pantalla(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
     
     def reset(self):
         seguir_jugando = input("\n¿Deseas volver a jugar? [Y/N]\n")

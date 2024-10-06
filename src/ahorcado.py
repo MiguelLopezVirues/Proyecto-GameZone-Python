@@ -34,34 +34,40 @@ class Ahorcado():
                 self.actualizar_dibujo("loss")
                 print("\n¡NOOOO, has matado al ahorcado!")
                 self.pintar_dibujo()
+                print("\nHas perdido.")
                 break
             else:
-                print("Actualiza dibujo")
                 self.actualizar_dibujo(self.vidas_restantes)
 
-            self.actualizar_display(letra_intento)
+            self.actualizar_display()
             self.pintar_dibujo()
             self.pintar_display()
 
         self.reset()
 
     
-    def seleccionar_dificultad(self):
-        try:
-            self.vidas_restantes = int(input("""Elige tu dificultad introduciendo el número de vidas:                                
+    def seleccionar_dificultad(self,retry=False):
+        if not retry:
+            self.vidas_restantes = input("""\nElige tu dificultad introduciendo el número de vidas:                                
             Insecto: 6 vidas
             Principiante: 5 vidas
             Corriente: 4 vidas
             Atrevido: 3 vidas
             Leyenda: 2 vidas
             Puto colgao: 1 vida
-            """))
+            """)
+        else:
+            self.vidas_restantes = input("\n")
+        try:
+            self.vidas_restantes = int(self.vidas_restantes)
             if self.vidas_restantes < 1 or self.vidas_restantes > 6:
                 raise IndexError("Valor fuera de rango.")
         except IndexError:
             print("El valor que has introducido está fuera del rango permitido. Inténtalo de nuevo.")
+            self.seleccionar_dificultad(retry=True)
         except:
             print("El valor que has introducido no es correcto. Inténtalo de nuevo.")
+            self.seleccionar_dificultad(retry=True)
 
         self.dibujo = HANGMANPICS[-self.vidas_restantes-1]
 
@@ -87,16 +93,19 @@ class Ahorcado():
 
 
 
-    def introducir_letra(self) -> bool:
+    def introducir_letra(self,retry=False) -> bool:
         """"""
-        self.letra_ultimo_intento = input("\n\nEscribe una letra:")
+        if not retry:
+            self.letra_ultimo_intento = input("\n\nEscribe una letra:")
+        else:
+            self.letra_ultimo_intento = input("\n")
         try:
             if not self.letra_ultimo_intento.isalpha():
                 raise ValueError("El valor introducido no es una letra.")
         except:
             print("No has introducido una letra válida. Inténtalo de nuevo.")
-            self.introducir_letra()
-        if letra_intento in self.palabra_turno_lista:
+            self.introducir_letra(retry=True)
+        if self.letra_ultimo_intento in self.palabra_turno_lista:
             print("¡Acierto!")
                 
         else: 

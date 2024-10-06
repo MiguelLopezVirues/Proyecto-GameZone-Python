@@ -1,5 +1,7 @@
 # development notebook
 notebooks/notebook_desarrollo.ipynb
+# Pipfiles
+Pipfile*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

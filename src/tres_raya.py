@@ -7,7 +7,98 @@ import os
 import pyfiglet
 from colorama import Fore, Style, init
 class Tres_raya():
+    """
+    Clase que gestiona el funcionamiento del juego de Tres en Raya (Tic-Tac-Toe).
+
+    Attributes:
+    -----------
+    celda_vacia : str
+        Representa una celda vacía en el tablero.
+    posiciones : list[list[str]]
+        Matriz 3x3 que representa el tablero de juego.
+    lista_coordenadas : list[str]
+        Lista con las coordenadas posibles del tablero en formato "fila,columna".
+    matriz_coordenadas : list[list[str]]
+        Matriz con las coordenadas del tablero en formato "fila,columna".
+    n_jugadores : int
+        Número de jugadores en la partida (1 o 2).
+    ficha_jugador : dict
+        Diccionario que asocia cada jugador con su ficha ("x" o "o").
+    turno : str
+        Indica qué jugador tiene el turno actual ("jugador_1" o "jugador_2").
+    lista_jugadores : list[str]
+        Lista que contiene los nombres de los jugadores.
+    modo_automatico : bool
+        Indica si el segundo jugador es la máquina.
+    lineas_coordenadas : dict
+        Diccionario que contiene las diferentes líneas (horizontales, verticales y diagonales) del tablero con sus respectivas coordenadas.
+    lineas : dict
+        Diccionario que contiene las posiciones actuales en el tablero para cada línea (horizontal, vertical y diagonal).
+    modo_dificultad : bool
+        Indica la dificultad de la IA (True para inteligente, False para aleatorio).
+    condiciones_victoria : dict
+        Diccionario que almacena las condiciones de victoria o empate.
+
+    Methods:
+    --------
+    __init__():
+        Inicializa el tablero y todos los atributos necesarios para empezar el juego.
+    
+    welcome():
+        Muestra el título de bienvenida del juego en la consola.
+    
+    jugar():
+        Inicia el flujo principal del juego, gestionando el número de jugadores, turnos y verificando las condiciones de victoria o empate.
+    
+    introducir_ficha_jugador():
+        Solicita la coordenada del jugador para introducir una ficha en el tablero.
+    
+    elegir_jugadores():
+        Permite al usuario elegir si habrá 1 o 2 jugadores y, si es 1, activa el modo automático para que la máquina sea el segundo jugador.
+    
+    elegir_turnos():
+        Permite elegir qué jugador empieza, con opción aleatoria por defecto.
+    
+    actualizar_turno():
+        Alterna el turno entre los jugadores.
+    
+    elegir_ficha():
+        Permite al jugador 1 elegir qué ficha usar ("x" o "o"), con una opción aleatoria por defecto.
+    
+    elegir_dificultad():
+        Establece el nivel de dificultad para la máquina.
+    
+    encontrar_coordenadas_celdas_vacias(coordenada):
+        Verifica si una celda está vacía según la coordenada proporcionada.
+    
+    evaluar_celdas_vacias(lista_puntuaciones, coordenada):
+        Evalúa las celdas vacías y asigna puntuaciones a las coordenadas en función de las estrategias de la máquina.
+    
+    estrategia_maquina(modo_dificultad):
+        Define el movimiento de la máquina, ya sea usando una estrategia inteligente o eligiendo una celda al azar.
+    
+    introducir_ficha(coordenada):
+        Introduce una ficha en la posición indicada por la coordenada.
+    
+    pintar_tablero():
+        Muestra el tablero actual en la consola.
+    
+    actualizar_lineas():
+        Actualiza las líneas del tablero (horizontal, vertical y diagonal) con las posiciones actuales.
+    
+    comprobar_victoria():
+        Verifica si algún jugador ha ganado o si ha habido un empate.
+    
+    limpiar_pantalla():
+        Limpia la pantalla de la consola.
+    
+    reset():
+        Reinicia el juego si el jugador decide volver a jugar después de una partida.
+    """
     def __init__(self) -> None:
+        """
+        Inicializa el tablero de juego, fichas y configuraciones del Tres en Raya.
+        """
         self.celda_vacia = "  "
         self.posiciones = [[self.celda_vacia for i in range(3)] for j in range(3)]
         self.lista_coordenadas = [f"{fila},{columna}" for columna in range(3) for fila in range(3)]
@@ -32,11 +123,18 @@ class Tres_raya():
         }
 
     def welcome(self):
+        """
+        Muestra un banner de bienvenida al juego.
+        """
         init(autoreset=True)
         titulo = pyfiglet.figlet_format("TIC-TAC-TOE", font="bulbhead")
         print(Fore.BLUE + titulo)
 
     def jugar(self):
+        """
+        Inicia el juego, permite elegir jugadores, dificultad, fichas y turnos.
+        Luego se lleva a cabo la partida hasta que haya un ganador o empate.
+        """
         self.elegir_jugadores()
         if self.modo_automatico == True:
             self.elegir_dificultad()
@@ -59,6 +157,11 @@ class Tres_raya():
         self.reset()
 
     def introducir_ficha_jugador(self):
+        """
+        Permite al jugador introducir las coordenadas para colocar su ficha, 
+        realizando una llamada al método introducir_ficha(coordenada).
+        Si la coordenada no es válida, se vuelve a realizar la petición.
+        """
         coordenada = input(f"{self.turno.title()}, introduce una coordenada de dos numeros, separados por una coma: \n")
         try:
             self.introducir_ficha(coordenada)
@@ -72,6 +175,10 @@ class Tres_raya():
             
 
     def elegir_jugadores(self):
+        """
+        Permite al usuario seleccionar el número de jugadores.
+        Si solo hay uno, activa el modo de juego contra la máquina.
+        """
         try:
             self.n_jugadores = int(input("¿Cuantos jugadores sois?[1/2]\n"))
             if self.n_jugadores < 1 or self.n_jugadores > 2:
@@ -89,6 +196,11 @@ class Tres_raya():
 
     
     def elegir_turnos(self):
+        """
+        Elige quién comenzará la partida. El usuario puede escoger entre
+        Jugador 1, Jugador 2 o una selección aleatoria, que es el valor 
+        por defecto en caso de haber introducido un valor incorrecto.
+        """
         try:
             eleccion_turnos = int(input("""\n¿Quien empieza, el Jugador 1 o el Jugador 2? Introduce un número:
                             1. Jugador_1
@@ -109,11 +221,18 @@ class Tres_raya():
 
         
     def actualizar_turno(self):
+        """
+        Cambia el turno al otro jugador.
+        """
         self.lista_jugadores = list(reversed(self.lista_jugadores))
         self.turno = self.lista_jugadores[0]
         pass
     
     def elegir_ficha(self):
+        """
+        Permite a los jugadores seleccionar sus fichas (X o O). Si el valor 
+        introducido es incorrecto, se elige aleatoriamente por defecto.
+        """
         eleccion_fichas = int(input(f"""\nJugador 1. ¿Con que ficha quieres jugar? Introduce el número correspondiente a tu elección:
                                 1. {fichas_tic_tac_toe["x"]}
                                 2. {fichas_tic_tac_toe["o"]}
@@ -140,6 +259,9 @@ class Tres_raya():
         }
     
     def elegir_dificultad(self):
+        """
+        Permite al usuario elegir la dificultad en el modo contra la máquina.
+        """
         seguir_jugando = input("\n¿Deseas jugar en modo fácil? [Y/N]\n")
         try:
             if seguir_jugando.upper()[0] == "Y":
@@ -152,23 +274,75 @@ class Tres_raya():
 
     ## ESTRATEGIA MAQUINA
     def encontrar_coordenadas_celdas_vacias(self,coordenada):
+        """
+        Verifica si una coordenada específica está vacía.
+
+        Parameters:
+        coordenada (str): Coordenada en formato "fila,columna"
+
+        Returns:
+        bool: True si la celda está vacía, False de lo contrario.
+        """
         fila = int(coordenada.split(",")[0])
         columna = int(coordenada.split(",")[1])
         if self.posiciones[fila][columna] == self.celda_vacia:
             return True
         
     def evaluar_celdas_vacias(self,lista_puntuaciones,coordenada):
+        """
+        Evalúa las celdas vacías y les asigna puntuaciones en función de las líneas de juego.
 
+        Parameters:
+        lista_puntuaciones (list): Lista con puntuaciones de las celdas.
+        coordenada (str): Coordenada de la celda a evaluar.
+
+        Returns:
+        list: Lista con las puntuaciones actualizadas.
+        """
         def filtrar_lineas(lista, linea):
+            """
+            Filtra las líneas del tablero que contienen la coordenada dada.
+
+            Parameters:
+            -----------
+            lista : list
+                Lista de líneas que han sido filtradas y que contienen la coordenada.
+            linea : str
+                Nombre de la línea actual (horizontal, vertical o diagonal) a verificar.
+
+            Returns:
+            --------
+            list
+                Lista actualizada con las líneas que contienen la coordenada.
+            """
             if coordenada in self.lineas_coordenadas[linea]:
                 lista.append(self.lineas[linea])
             return lista
             
-        
         nombres_lineas = list(self.lineas.keys())
         lineas_de_coordenada = list(reduce(filtrar_lineas,nombres_lineas,list()))
 
         def puntuar_coordenada(acumulado,linea):
+            """
+            Asigna una puntuación a una coordenada en función de las fichas en una línea.
+
+            Parameters:
+            -----------
+            acumulado : list
+                Lista con la coordenada en evaluación y su puntuación en formato de cadena.
+            linea : list[str]
+                Lista que contiene las fichas en una línea específica del tablero (puede ser una fila, columna o diagonal).
+
+            Returns:
+            --------
+            list
+                Lista que contiene la coordenada y su puntuación acumulada en formato de cadena "xxxxx", donde cada posición de la cadena indica:
+                    - Posición 0: Jugador 2 está a punto de ganar.
+                    - Posición 1: Jugador 1 está a punto de ganar.
+                    - Posición 2: Jugador 2 tiene una ficha y puede acumular estrategia.
+                    - Posición 3: Jugador 1 tiene una ficha y debe ser bloqueado.
+                    - Posición 4: Línea completamente vacía.
+            """
             acumulado[1] = list(acumulado[1])
             if linea.count(self.ficha_jugador["jugador_2"]) == 2: # Ganar partida
                 acumulado[1][0] = str(int(acumulado[1][0]) + 1)
@@ -189,6 +363,13 @@ class Tres_raya():
 
     
     def estrategia_maquina(self,modo_dificultad):
+        """
+        Estrategia de la máquina para jugar. Puede ser aleatoria o basada en
+        una evaluación inteligente según la dificultad seleccionada.
+
+        Parameters:
+        modo_dificultad (bool): Indica si se está jugando en modo fácil o difícil.
+        """
         celdas_disponibles = list(filter(self.encontrar_coordenadas_celdas_vacias,self.lista_coordenadas))
 
         # inteligente
@@ -206,6 +387,12 @@ class Tres_raya():
 
 
     def introducir_ficha(self, coordenada):
+        """
+        Coloca la ficha del jugador en la coordenada seleccionada.
+
+        Parameters:
+        coordenada (str): Coordenada donde se introducirá la ficha.
+        """
         fila, columna = coordenada.split(",")
         fila = int(coordenada.split(",")[0])
         columna = int(coordenada.split(",")[1])
@@ -216,6 +403,9 @@ class Tres_raya():
             self.introducir_ficha(coordenada)
     
     def pintar_tablero(self):
+        """
+        Dibuja el tablero actual en la pantalla con las posiciones ocupadas por las fichas.
+        """
         print("\n")
         print(f"{self.posiciones[0][0]}❕{self.posiciones[0][1]}❕{self.posiciones[0][2]}")
         print("➖➕➖➕➖")
@@ -225,6 +415,10 @@ class Tres_raya():
         print("\n")
 
     def actualizar_lineas(self):
+        """
+        Actualiza las líneas horizontales, verticales y diagonales con las fichas
+        colocadas en el tablero.
+        """
         self.lineas = {
             "vertical_0": [fila[0] for fila in self.posiciones],
             "vertical_1": [fila[1] for fila in self.posiciones],
@@ -237,6 +431,12 @@ class Tres_raya():
         }
 
     def comprobar_victoria(self):
+        """
+        Comprueba si hay un ganador o si la partida ha terminado en empate.
+
+        Returns:
+        bool: True si hay un ganador o empate, False si la partida continúa.
+        """
         self.actualizar_lineas()
         for linea, contenido_linea in self.lineas.items():
             self.condiciones_victoria = {
@@ -259,10 +459,16 @@ class Tres_raya():
         return False
     
     def limpiar_pantalla(self):
+        """
+        Limpia la pantalla para mostrar el siguiente turno del juego.
+        """
         os.system('cls' if os.name == 'nt' else 'clear')
 
 
     def reset(self):
+        """
+        Resetea el juego, permitiendo al usuario elegir si quiere jugar otra partida.
+        """
         seguir_jugando = input("\n¿Deseas volver a jugar? [Y/N]\n")
         if seguir_jugando.upper()[0] == "Y":
             self.__init__()

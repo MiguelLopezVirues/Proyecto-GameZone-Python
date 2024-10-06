@@ -99,9 +99,9 @@ class Ahorcado():
             self.dibujo = HANGMANPICS[-self.vidas_restantes-1]
 
     def reset(self):
-        seguir_jugando = input("¿Deseas volver a jugar? [Y/N]")
+        seguir_jugando = input("\n¿Deseas volver a jugar? [Y/N]\n")
         if seguir_jugando.upper()[0] == "Y":
             self.__init__()
             self.jugar()
         else:
-            print("¡Ha sido un placer!")
+            print("\n¡Ha sido un placer!\n")

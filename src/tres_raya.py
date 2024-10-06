@@ -132,8 +132,22 @@ class Tres_raya():
 
     def jugar(self):
         """
-        Inicia el juego, permite elegir jugadores, dificultad, fichas y turnos.
-        Luego se lleva a cabo la partida hasta que haya un ganador o empate.
+        Inicia el ciclo principal del juego de tres en raya (Tic-Tac-Toe), donde los jugadores seleccionan el número
+        de jugadores, la dificultad, el tipo de fichas y los turnos. Luego, se ejecuta la partida hasta que haya un
+        ganador o un empate.
+
+        Detalles:
+        - Se permite la selección del número de jugadores: 1 o 2.
+        - Se define si se juega contra la máquina o entre jugadores humanos.
+        - Los jugadores eligen qué fichas utilizar (X o O).
+        - Se alternan turnos entre los jugadores o la máquina.
+        - La partida continúa hasta que uno de los jugadores logre alinear tres fichas seguidas (horizontal, vertical o diagonalmente)
+        o hasta que se acaben las casillas disponibles (empate).
+        - Al final del juego, se muestra un mensaje indicando si hay un ganador o si la partida ha terminado en empate.
+        
+        La función también incluye:
+        - Manejo de los turnos, incluida la IA para el jugador controlado por la máquina en dificultades superiores.
+        - Restablecimiento del juego después de cada partida.
         """
         self.elegir_jugadores()
         if self.modo_automatico == True:
@@ -460,14 +474,16 @@ class Tres_raya():
     
     def limpiar_pantalla(self):
         """
-        Limpia la pantalla para mostrar el siguiente turno del juego.
+        Limpia la pantalla de la consola para hacer más fácil la visualización.
+        Funciona tanto en sistemas Windows como en Unix.
         """
         os.system('cls' if os.name == 'nt' else 'clear')
 
 
     def reset(self):
         """
-        Resetea el juego, permitiendo al usuario elegir si quiere jugar otra partida.
+        Pregunta al jugador si desea reiniciar el juego. Si elige continuar, reinicia las variables del juego; 
+        si no, termina el programa con un mensaje de despedida.
         """
         seguir_jugando = input("\n¿Deseas volver a jugar? [Y/N]\n")
         if seguir_jugando.upper()[0] == "Y":

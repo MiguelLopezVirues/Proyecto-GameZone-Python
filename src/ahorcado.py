@@ -39,7 +39,7 @@ class Ahorcado():
     
     def seleccionar_dificultad(self):
         self.vidas_restantes = int(input("""Elige tu dificultad introduciendo el número de vidas:
-        Nenaza: 6 vidas
+        Patético: 6 vidas
         Principiante: 5 vidas
         Corriente: 4 vidas
         Atrevido: 3 vidas

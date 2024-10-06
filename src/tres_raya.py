@@ -44,15 +44,16 @@ class Tres_raya():
             self.elegir_dificultad()
         self.elegir_turnos()
         self.elegir_ficha()
+        self.pintar_tablero()
         while not all(posicion != " " for fila in self.posiciones for posicion in fila):
             if self.modo_automatico == True and self.turno == "jugador_2":
+                print("Turno del Jugador 2.")
                 coordenada = self.estrategia_maquina(self.modo_dificultad)
             else:
-                coordenada = input(f"{self.turno.title()}, introduce una coordenada de dos numeros, separados por una coma: ")
+                coordenada = input(f"{self.turno.title()}, introduce una coordenada de dos numeros, separados por una coma: \n")
             self.introducir_ficha(coordenada)
             self.pintar_tablero()
             if self.comprobar_victoria() == True:
-                print(f"¡VICTORIA DEL {self.turno.upper()}")
                 break
             self.actualizar_turno()
 
@@ -60,19 +61,20 @@ class Tres_raya():
 
 
     def elegir_jugadores(self):
-        self.n_jugadores = int(input("¿Cuantos jugadores sois?"))
+        self.n_jugadores = int(input("¿Cuantos jugadores sois?\n"))
         if self.n_jugadores == 1:
-            print("De acuerdo. El jugador 2 será la máquina.")
+            print("\nDe acuerdo. El jugador 2 será la máquina.")
             self.modo_automatico = True
         else:
-            print("Demostrad vuestro fair play y que gane el mejor.")
+            print("\nDemostrad vuestro fair play y que gane el mejor.")
 
     
     def elegir_turnos(self):
-        eleccion_turnos = int(input("""¿Quien empieza, el Jugador 1 o el Jugador 2? Introduce un número:
+        eleccion_turnos = int(input("""\n¿Quien empieza, el Jugador 1 o el Jugador 2? Introduce un número:
                             1. Jugador_1
                             2. Jugador_2
-                            3. Aleatorio"""))
+                            3. Aleatorio
+                            \n"""))
         if eleccion_turnos == 1:
             pass
         elif eleccion_turnos == 2:
@@ -82,16 +84,17 @@ class Tres_raya():
 
         
     def actualizar_turno(self):
-        print("Cambio turno")
         self.lista_jugadores = list(reversed(self.lista_jugadores))
         self.turno = self.lista_jugadores[0]
         pass
     
     def elegir_ficha(self):
-        eleccion_fichas = int(input("""Jugador 1. ¿Con que ficha quieres jugar? Introduce el número correspondiente a tu elección:
+        eleccion_fichas = int(input("""\nJugador 1. ¿Con que ficha quieres jugar? Introduce el número correspondiente a tu elección:
                                 1. X
                                 2. O
-                                3. Aleatorio"""))
+                                3. Aleatorio
+                                \n"""))
+        
         fichas_posibles = ["X","0"]
         
         opciones_fichas = {
@@ -99,7 +102,6 @@ class Tres_raya():
             2: 1,
             3: random.choice([0,1])}
         
-        print(opciones_fichas[eleccion_fichas])
         
         self.ficha_jugador = {
             "jugador_1": fichas_posibles.pop(opciones_fichas[eleccion_fichas]),
@@ -107,7 +109,7 @@ class Tres_raya():
         }
     
     def elegir_dificultad(self):
-        seguir_jugando = input("¿Deseas jugar en modo fácil? [Y/N]")
+        seguir_jugando = input("\n¿Deseas jugar en modo fácil? [Y/N]\n")
         if seguir_jugando.upper()[0] == "Y":
             self.modo_dificultad = False
         else:
@@ -131,7 +133,6 @@ class Tres_raya():
         lineas_de_coordenada = list(reduce(filtrar_lineas,nombres_lineas,list()))
 
         def puntuar_coordenada(acumulado,linea):
-            # print("Printeando linea:",linea)
             acumulado[1] = list(acumulado[1])
             if linea.count(self.ficha_jugador["jugador_2"]) == 2: # Ganar partida
                 acumulado[1][0] = str(int(acumulado[1][0]) + 1)
@@ -169,7 +170,6 @@ class Tres_raya():
 
 
     def introducir_ficha(self, coordenada):
-        print("Lineas antes de introducir", self.lineas)
         fila, columna = coordenada.split(",")
         fila = int(coordenada.split(",")[0])
         columna = int(coordenada.split(",")[1])
@@ -180,6 +180,7 @@ class Tres_raya():
             self.introducir_ficha(coordenada)
     
     def pintar_tablero(self):
+        print("\n ---")
         [print(f"({fila[0]}) ({fila[1]}) ({fila[2]})") for fila in self.posiciones]
         print("\n ---")
 
@@ -198,19 +199,27 @@ class Tres_raya():
     def comprobar_victoria(self):
         self.actualizar_lineas()
         for linea, contenido_linea in self.lineas.items():
-            # print(linea,contenido_linea)
-            if all([posicion == "X" for posicion in contenido_linea]) or all([posicion == "O" for posicion in contenido_linea]):
+            if all([posicion == self.ficha_jugador[self.lista_jugadores[0]] for posicion in contenido_linea]) or all([posicion == self.ficha_jugador[self.lista_jugadores[1]] for posicion in contenido_linea]):
+                if all([posicion == self.ficha_jugador[self.lista_jugadores[0]] for posicion in contenido_linea]):
+                    ganador = self.lista_jugadores[0].title().replace("_"," ")
+                    print(f"\n¡Enhorabuena {ganador}, ganas la partida!")
+                elif all([posicion == self.ficha_jugador[self.lista_jugadores[1]] for posicion in contenido_linea]):
+                    ganador = self.lista_jugadores[0].title().replace("_"," ")
+                    print(f"\n¡Enhorabuena {ganador}, ganas la partida!")
+                return True
+            elif all([columna != " " for fila in self.posiciones for columna in fila]):
+                print("Ha habido un empate.")
                 return True
         return False
 
 
     def reset(self):
-        seguir_jugando = input("¿Deseas volver a jugar? [Y/N]")
+        seguir_jugando = input("\n¿Deseas volver a jugar? [Y/N]\n")
         if seguir_jugando.upper()[0] == "Y":
             self.__init__()
             self.jugar()
         else:
-            print("¡Ha sido un placer!")
+            print("\n¡Ha sido un placer!\n")
     
 
 

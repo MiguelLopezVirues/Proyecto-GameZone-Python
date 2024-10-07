@@ -14,6 +14,7 @@ Este proyecto realiza el desarrollo de una Sala de Juegos con 4 juegos clásicos
 
 │   ├── tres_raya.py            
 │   └── recursos/   # Archivos almacenadores de variables estáticas de cada uno de los juegos 
+
 │       ├── ahorcado_recursos.py     
 │       ├── piedra_papel_tijera.py   
 │       ├── preguntados.py          

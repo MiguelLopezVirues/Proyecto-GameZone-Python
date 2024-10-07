@@ -2,13 +2,13 @@
 
 ## 📖 Descripción
 Este proyecto realiza el desarrollo de una Sala de Juegos con 4 juegos clásicos, cuyas lógicas de juego individuales están gestionadas por sus clases de Python independientes. Cada uno de los juegos se orquesta desde un script central que hace la función de Sala de Juegos, donde el usuario tiene la opción de jugar al juego que elija. Los juegos incluidos son:
-- 🪨✂️🦎 Piedra-papel-tijera-lagarto-Spock: Una variante divertida del clásico juego de Piedra, Papel y Tijeras, donde se agregan nuevas opciones: Lagarto y Spock, ¡ampliando la estrategia!
+- 🪨✂️🦎 Piedra-papel-tijera-lagarto-Spock: Una variante divertida del clásico juego de Piedra, Papel y Tijeras, donde se agregan nuevas opciones más frikis: Lagarto y Spock, ¡ampliando la estrategia!
 
 - ❌⭕ Tres en raya (con IA): El conocido juego de estrategia en el que debes alinear tres símbolos en una cuadrícula. Incluye un modo de Inteligencia Artificial para desafiar al jugador.
 
 - 𓍯😵 Ahorcado: Adivina la palabra antes de quedarte sin vidas. Cada fallo acerca más al pobre muñeco a su destino final.
 
-- ❓🧠 Preguntados: Pon a prueba tus conocimientos en varias rondas de preguntas de distintas categorías, desde historia hasta entretenimiento.
+- ❓🧠 Preguntados: Pone a prueba tus conocimientos en varias rondas de preguntas de distintas categorías, desde historia hasta entretenimiento.
 
 ## 🗂️ Estructura del Proyecto
 ├── src/  # Directorio de scripts con las lógicas de cada juego

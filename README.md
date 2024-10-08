@@ -1,4 +1,4 @@
-# 🕹️ Sala de juegos con Python: Programación orientada a objetos de juegos clásicos
+# 🕹️ Sala de juegos con Python: Programación orientada a objetos aplicada
 <p align="center">
   <img src="assets/gamezone.gif" alt="alt text" title="Title">
 </p>

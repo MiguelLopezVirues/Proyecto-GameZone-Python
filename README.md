@@ -1,5 +1,5 @@
 # 🕹️ Sala de juegos con Python: Programación orientada a objetos de juegos clásicos
-![alt text](assets/gamezone.gif "Title"){style="display: block; margin: 0 auto" }
+![alt text](assets/gamezone.gif "Title")
 ## 📖 Descripción
 Este proyecto realiza el desarrollo de una Sala de Juegos con 4 juegos clásicos, cuyas lógicas de juego individuales están gestionadas por sus clases de Python independientes. Cada uno de los juegos se orquesta desde un script central que hace la función de Sala de Juegos, donde el usuario tiene la opción de jugar al juego que elija. Los juegos incluidos son:
 - 🪨✂️🦎 Piedra-papel-tijera-lagarto-Spock: Una variante divertida del clásico juego de Piedra, Papel y Tijeras, donde se agregan nuevas opciones más frikis: Lagarto y Spock, ¡ampliando la estrategia!

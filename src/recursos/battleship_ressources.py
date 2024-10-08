@@ -1,0 +1,5 @@
+sea_icon = "🌊"
+ship_icon = "🚢"
+sunk_icon = "💀"
+touched_icon = "💥"
+water_icon = "💧"

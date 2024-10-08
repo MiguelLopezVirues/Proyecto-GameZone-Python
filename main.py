@@ -1,5 +1,5 @@
 from src.ahorcado import Ahorcado
-from src.tres_raya import Tres_raya
+from src.tres_en_raya import Tres_raya
 from src.preguntados import Preguntados
 from src.piedra_papel_tijera import Piedra_papel_tijera
 import time
@@ -36,7 +36,6 @@ def main():
     if juego_en_curso == "salir":
         print("De acuerdo. ¡Vuelve cuado quieras!")
         exit()
-    juego_en_curso.limpiar_pantalla()
     juego_en_curso.welcome()
 
     time.sleep(1.5)

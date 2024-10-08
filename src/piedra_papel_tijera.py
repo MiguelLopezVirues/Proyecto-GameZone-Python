@@ -83,6 +83,7 @@ class Piedra_papel_tijera:
         """
         Muestra un banner de bienvenida al juego.
         """
+        self.limpiar_pantalla()
         init(autoreset=True)
         titulo = pyfiglet.figlet_format("PIEDRA-PAPEL-TIJERA", font="rounded")
         print(Fore.BLUE + titulo)
@@ -97,7 +98,8 @@ class Piedra_papel_tijera:
         self.definir_rondas()
         puntos_victoria = int(self.rondas / 2 + 1)
         while self.puntuacion_jugador < puntos_victoria and self.puntuacion_maquina < puntos_victoria:
-            print(f"\nJugador vs. máquina: {self.puntuacion_jugador} - {self.puntuacion_maquina}")
+            self.welcome
+            print(f"\n\nJugador vs. máquina: {self.puntuacion_jugador} - {self.puntuacion_maquina}")
             self.elegir_luchador()
             self.comprobar_ganador_ronda()
         

@@ -6,6 +6,7 @@ from .recursos.tres_en_raya_recursos import welcome_banner, fichas_tic_tac_toe
 import os 
 import pyfiglet
 from colorama import Fore, Style, init
+import time
 class Tres_raya():
     """
     Clase que gestiona el funcionamiento del juego de Tres en Raya (Tic-Tac-Toe).
@@ -126,6 +127,7 @@ class Tres_raya():
         """
         Muestra un banner de bienvenida al juego.
         """
+        self.limpiar_pantalla()
         init(autoreset=True)
         titulo = pyfiglet.figlet_format("TIC-TAC-TOE", font="bulbhead")
         print(Fore.BLUE + titulo)
@@ -154,19 +156,20 @@ class Tres_raya():
             self.elegir_dificultad()
         self.elegir_turnos()
         self.elegir_ficha()
-        self.limpiar_pantalla()
-        self.pintar_tablero()
         self.actualizar_lineas()
         while not all(posicion != self.celda_vacia for fila in self.posiciones for posicion in fila):
+            self.welcome()
+            self.pintar_tablero()
             if self.modo_automatico == True and self.turno == "jugador_2":
                 print("Turno del Jugador 2.")
                 self.estrategia_maquina(self.modo_dificultad)
             else:
                 self.introducir_ficha_jugador()
-            self.pintar_tablero()
+            time.sleep(1)
             if self.comprobar_victoria() == True:
                 break
             self.actualizar_turno()
+            self.welcome()
 
         self.reset()
 

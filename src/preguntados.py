@@ -66,6 +66,7 @@ class Preguntados():
         """
         Muestra un mensaje de bienvenida con el título del juego.
         """
+        self.limpiar_pantalla()
         init(autoreset=True)
         titulo = pyfiglet.figlet_format("PREGUNTADOS", font="starwars")
         print(Fore.RED + titulo)
@@ -88,6 +89,7 @@ class Preguntados():
         Si el jugador comete un error antes de la última ronda, corta la partida.
         """
         for n_ronda, p_partida in enumerate(self.p_partida):
+            self.welcome()
             print(f"""\n -----------------------------------------------\nRonda {n_ronda + 1}.\n""")
             print("Pregunta:", p_partida["pregunta"])
             respuestas = p_partida["incorrecta"]

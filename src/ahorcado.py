@@ -71,6 +71,7 @@ class Ahorcado:
 
     def welcome(self) -> None:
         """Muestra un mensaje de bienvenida con el título del juego."""
+        self.limpiar_pantalla()
         init(autoreset=True)
         self.titulo = pyfiglet.figlet_format("HANGMAN", font="poison")
         print(Fore.LIGHTRED_EX + self.titulo)

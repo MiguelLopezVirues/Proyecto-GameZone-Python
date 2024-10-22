@@ -6,7 +6,7 @@ import os
 import pyfiglet
 from colorama import Fore, Style, init
 
-class sink_fleet():
+class Battleship():
     def __init__(self) -> None:
         self.lines_player = None
         self.lines_machine = None
@@ -30,14 +30,21 @@ class sink_fleet():
     
 
     def jugar(self):
+        self.print_board()
+        print("Let's place your fleet!")
         self.place_fleet()
+
         self.choose_difficulty()
         while not any(all(),all()):
             pass
 
 
     def print_board(self):
-        pass
+        for row in self.board_player:
+            print(''.join(cell for cell in row))
+    
+
+
 
 
 
@@ -51,10 +58,12 @@ class sink_fleet():
                       "destroyer": 2}
         for ship_name, ship_length in self.ships.items():
             if player:
-                ship_coordinates_list = self.ask_ship_position_direction()
+                self.limpiar_pantalla()
+                self.print_board()
+                ship_coordinates_list = self.ask_ship_position_direction(ship_name=ship_name, ship_length=ship_length)
                 self.place_ship(ship_name,ship_coordinates_list)
             else:
-                ship_coordinates_list = self.decide_ship_position_machine()
+                ship_coordinates_list = self.decide_ship_position_machine(ship_name=ship_name, ship_length=ship_length)
                 self.place_ship(ship_name,ship_coordinates_list)
 
 
@@ -62,21 +71,37 @@ class sink_fleet():
     def ask_ship_position(self, ship, retry = False, who="player"):
         if who == "player":
             if not retry:
-                coordinates_1 = input(f"Choose and write a first coordinate to place your {ship.replace("_"," ").title()} by introducing two integers separated by a comma:")
+                ship_name = ship.replace("_"," ").title()
+                coordinates_1 = input(f"Choose and write a first coordinate to place your {ship_name} by introducing two integers separated by a comma:")
             else: 
                 coordinates_1 = input(f"")
         else:
+            pass
 
         try:
-            x1,y1 = coordinates_1.split(",")
-            if any(x1 <0, x1 > 9, y1 < 0, y1 > 9):
+            x1, y1 = coordinates_1.split(",")
+            x1 = int(x1)
+            y1 = int(y1)
+            
+            if any([x1 <0, x1 > 9, y1 < 0, y1 > 9]):
                 raise IndexError("The coordinates suggested jump out of the board.")
-        except:
+            elif self.touches([f"{x1},{y1}"], self.player_ship_coordinates):
+                raise IndexError("The coordinates are already taken by another ship.")
+            
+        except ValueError:
             if who == "player":
-                print("Wrong value for a coordinate introduced.")
-                self.ask_ship_position(retry=True)
+                print("Wrong value for a coordinate introduced. Please, enter a correct value.")
+                self.ask_ship_position(ship,retry=True)
             else:
-                self.ask_ship_position(retry=True,who="machine")
+                self.ask_ship_position(ship,retry=True,who="machine")
+
+        except IndexError:
+            if who == "player":
+                print("The coordinates suggested jump out of the board or are already taken.")
+                self.ask_ship_position(ship,retry=True)
+            else:
+                self.ask_ship_position(ship,retry=True,who="machine")
+        
         return x1,y1
 
     def ask_ship_direction(self,x1,y1, ship_name, ship_length, retry = False, who = "player"):
@@ -95,25 +120,38 @@ class sink_fleet():
             direction = int(direction)
             if direction < 0 or direction > 4:
                 raise ValueError("Answer out of permitted range.")
-            direction_options = {
-                1: [x1 - ship_length, y1],
-                2: [x1 + ship_length, y1],
-                3: [x1, y1 + ship_length],
-                4: [x1, y1 - ship_length]
+            self.direction_options = {
+                1: [x1 - ship_length-1, y1],
+                2: [x1 + ship_length-1, y1],
+                3: [x1, y1 - ship_length-1],
+                4: [x1, y1 + ship_length-1]
             }
-            x2, y2 = direction_options[direction]
-            if any(x2 <0, x2 > 9, y2 < 0, y2 > 9):
+            x2, y2 = self.direction_options[direction]
+            if any([x2 <0, x2 > 9, y2 < 0, y2 > 9]):
+                print("Wrong calculation of direction",x2,y2)
                 raise IndexError("The coordinates suggested jump out of the board.")
+            
+            elif self.touches([f"{x2},{y2}"], self.player_ship_coordinates):
+                raise IndexError("The coordinates are already taken by another ship.")
+            
         except ValueError: 
             if who == "player":
                 print("Please introduce a valid number from the options.")
-                self.ask_ship_direction(retry=True,who="player")
+                self.ask_ship_direction(x1,y1,ship_name,ship_length,retry=True,who="player")
             else:
-                self.ask_ship_direction(retry=True,who="machine")
+                self.ask_ship_direction(x1,y1,ship_name,ship_length,retry=True,who="machine")
+
+        except IndexError: 
+            if who == "player":
+                print("One of these coordinates are already taken by another one of your ships.")
+                self.ask_ship_direction(x1,y1,ship_name,ship_length,retry=True,who="player")
+            else:
+                self.ask_ship_direction(x1,y1,ship_name,ship_length,retry=True,who="machine")
+        return x2,y2
         
     def ask_ship_position_direction(self,ship_name,ship_length):
         x1, y1 = self.ask_ship_position(ship_name)
-        x2, y2 = self.ask_ship_direction(ship_name,ship_length)
+        x2, y2 = self.ask_ship_direction(x1,y1,ship_name,ship_length)
         ship_coordinates_list = [f"{x1 + i},{y1+j}" for j in range(y2 - y1 + 1) for i in range(x2 - x1 + 1)]
         if self.touches(ship_coordinates_list, self.player_ship_coordinates):
             print("There are collisions with your previous ships. Please try again at a different location.")
@@ -121,7 +159,16 @@ class sink_fleet():
         return ship_coordinates_list
     
     def place_ship(self,ship_name,ship_coordinates_list, player=False):
-        self.player_ship_coordinates[ship_name] = ship_coordinates_list
+        if player:
+            self.player_ship_coordinates[ship_name] = ship_coordinates_list
+            for coordinate in ship_coordinates_list:
+                x, y = coordinate.split(",")
+                self.board_player[int(y)][int(x)] = ship_icon
+        else:
+            self.machine_ship_coordinates[ship_name] = ship_coordinates_list
+            for coordinate in ship_coordinates_list:
+                x, y = coordinate.split(",")
+                self.board_machine[int(y)][int(x)] = ship_icon
 
             
         
@@ -137,10 +184,25 @@ class sink_fleet():
 
     def decide_ship_position_machine(self):
         # aleatorio
-        pass
+        x1, y1 = [random.randint(0,9),random.randint(0,9)]
+        direction = random.choice[1,2,3,4]
+        x2, y2 = self.direction_options[direction]
+        while self.touches(ship_coordinates_list, self.player_ship_coordinates):
+            ship_coordinates_list = [f"{x1 + i},{y1+j}" for j in range(y2 - y1 + 1) for i in range(x2 - x1 + 1)]
+            if not self.touches(ship_coordinates_list, self.player_ship_coordinates):
+                break
+
+        return ship_coordinates_list
+    
+ 
 
 
-
+    def limpiar_pantalla(self):
+        """
+        Limpia la pantalla de la consola para hacer más fácil la visualización.
+        Funciona tanto en sistemas Windows como en Unix.
+        """
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 
     def reset(self):

@@ -2,6 +2,7 @@ from src.ahorcado import Ahorcado
 from src.tres_en_raya import Tres_raya
 from src.preguntados import Preguntados
 from src.piedra_papel_tijera import Piedra_papel_tijera
+from src.battleship import Battleship
 import time
 import pyfiglet
 from colorama import Fore, Style, init
@@ -24,7 +25,8 @@ def mostrar_menu():
     print("2. Tres en raya")
     print("3. Preguntados")
     print("4. Piedra-papel-tijera-lagarto-Spock")
-    print("5. Salir")
+    print("5. Hundir la flota")
+    print("6. Salir")
 
 def main():
 
@@ -50,7 +52,8 @@ def elegir_juego():
         "2": Tres_raya(),
         "3": Preguntados(),
         "4": Piedra_papel_tijera(),
-        "5": "salir"
+        "5": Battleship(),
+        "6": "salir"
     }
     try:
         juego_seleccionado = input("\nIntroduce el número que corresponde con el juego al que quieres jugar:").strip()

@@ -5,6 +5,9 @@ notebooks/notebook_desarrollo.ipynb
 Pipfile
 Pipfile.lock
 
+#workspace
+1. GameZone.code-workspace
+
 # plantillas 
 modulo1-como-escribir-readme.md
 

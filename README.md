@@ -40,16 +40,16 @@ Este proyecto fue desarrollado utilizando Python 3.9 y requiere de forma adicion
 Clona el repositorio:
 
 ```bash
-git clone https://github.com/SupernovaIa/Proyecto1-Juegos-Python.git
+git clone https://github.com/MiguelLopezVirues/Proyecto-GameZone-Python
 ```
 
 Navega al directorio del proyecto:
 
 ```bash
-cd Proyecto1-Juegos-Python
+cd Proyecto-GameZone-Python
 ```
 
-Instala las dependencias desde el archivo `requirements.txt`:
+Instala las dependencias desde el archivo `requirements.txt` con pip:
 
 ```bash
 pip install -r requirements.txt

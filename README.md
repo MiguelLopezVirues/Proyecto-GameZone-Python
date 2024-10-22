@@ -1,6 +1,6 @@
 # 🕹️ Sala de juegos con Python: Programación orientada a objetos aplicada
 <p align="center">
-  <img src="assets/gamezone.jpg" alt="alt text" title="Title">
+  <img src="assets/gamezone.avif" alt="alt text" title="Title">
 </p>
 
 ## 📖 Descripción

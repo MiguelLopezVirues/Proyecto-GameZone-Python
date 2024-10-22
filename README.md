@@ -33,10 +33,36 @@ Este proyecto realiza el desarrollo de una Sala de Juegos con 4 juegos clásicos
 ├── README.md             # Descripción del proyecto
 ```
 ## 🛠️ Instalación y Requisitos
-Este proyecto require Python 3.9 y requiere de forma adicional únicamente de la librería pyfiglet, para el estilo de los banners utilizados en las presentaciones de los juegos. El archivo requirements.txt puede utilizarse para instalarlas con el comando:
+[Response #1]
+
+Este proyecto fue desarrollado utilizando Python 3.9 y requiere de forma adicional únicamente de la librería pyfiglet, que se utiliza para los banners en las presentaciones de los juegos. Para ejecutar el proyecto, sigue estos pasos:
+
+Clona el repositorio:
+
 ```bash
-pip install requirements.txt
+git clone https://github.com/SupernovaIa/Proyecto1-Juegos-Python.git
 ```
+
+Navega al directorio del proyecto:
+
+```bash
+cd Proyecto1-Juegos-Python
+```
+
+Instala las dependencias desde el archivo `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
+
+Ejecuta el menú principal para seleccionar un juego:
+
+```bash
+python main.py
+```
+
+Puedes consultar la documentación de pyfiglet [aquí](https://github.com/pwaller/pyfiglet).
+
 ## ⚙️ Funcionalidades
 - **Tres en raya - Inteligencia Artificial**: El juego del tres en raya puede elegir ser jugado en modo difícil, lo cual activa la inteligencia artificial de la máquina, prácticamente imposibilitando la victoria.
 - **Preguntados**: Durante 10 rondas, se lanzan preguntas aleatorias de distintas categorías (Historia, Ciencia, Cultura General, etc). Si el usuario llega hasta la ronda 10 sin fallar, gana la partida.

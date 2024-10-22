@@ -4,7 +4,9 @@
 </p>
 
 ## 📖 Descripción
-Este proyecto realiza el desarrollo de una Sala de Juegos con 4 juegos clásicos, cuyas lógicas de juego individuales están gestionadas por sus clases de Python independientes. Cada uno de los juegos se orquesta desde un script central que hace la función de Sala de Juegos, donde el usuario tiene la opción de jugar al juego que elija. Los juegos incluidos son:
+Este proyecto realiza el desarrollo de una Sala de Juegos con 4 (un 5º en construcción) juegos clásicos, cuyas lógicas de juego individuales están gestionadas por sus clases de Python independientes. El objetivo es practicar Python con la filosofía de la programación orientada a objetos, sin hacer uso de librerías externas como Pandas o Numpy, para favorecer la comprensión base del lenguaje.
+
+Cada uno de los juegos programados se orquesta desde un script central que hace la función de Sala de Juegos, donde el usuario tiene la opción de jugar al juego que elija. Los juegos incluidos son:
 
 - ❌⭕ Tres en raya (con IA): El clásico estrategia en el que debes alinear los tres símbolos en una cuadrícula de 3x3. Incluye un modo contra la máquina con Inteligencia Artificial para desafiar al jugador.
 
